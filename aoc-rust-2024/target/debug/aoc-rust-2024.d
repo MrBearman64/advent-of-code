@@ -1,1 +1,0 @@
-/home/alex/Programming/advent-of-code/aoc-rust-2024/target/debug/aoc-rust-2024: /home/alex/Programming/advent-of-code/aoc-rust-2024/src/day1.rs /home/alex/Programming/advent-of-code/aoc-rust-2024/src/main.rs
