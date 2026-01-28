@@ -3,5 +3,17 @@
             [aoc-clojure.day1 :refer :all]))
 
 (deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+  (testing "Day 1 - Part 1"
+    (let [rotations [
+                     "L68"
+                     "L30"
+                     "R48"
+                     "L5"
+                     "R60"
+                     "L55"
+                     "L1"
+                     "L99"
+                     "R14"
+                     "L82"
+                     ]]
+    (is (= (solveDay1Part1 0 50 rotations) 3)))))
