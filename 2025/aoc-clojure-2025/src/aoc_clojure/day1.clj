@@ -1,7 +1,8 @@
 (ns aoc-clojure.day1
   (:require
    [clojure.java.io :as io]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [clojure.core.match :refer [match]]))
 
 (defn read-challenge-input
   []
@@ -28,7 +29,7 @@
 
 ;; Style critique by daddy GPT
 
-(defn- step [{:keys [pos acc]} rotation]
+(defn- hits-exactly-zero [{:keys [pos acc]} rotation]
   (let [dir (first rotation)
         amount (parse-long (apply str (subs rotation 1)))
         pos' (mod (({\L + \R -} dir) pos amount) 100)
@@ -36,4 +37,26 @@
     {:pos pos' :acc acc'}))
 
 (defn solve-day1-part1-functional [pos rotations]
-  (:acc (reduce step {:pos pos :acc 0} rotations)))
+  (:acc (reduce hits-exactly-zero {:pos pos :acc 0} rotations)))
+
+(defn- count-hits
+  "Count how many times 0 is hit in one rotation"
+  [pos pos' amount rotations]
+  ;; (if (and (or (not= pos' real-pos) (zero? pos')) ((complement zero?) pos)) (inc acc) acc)]
+  (match [pos pos' amount rotations]
+    [0 _ _ 0] 0
+    [_ 0 _ r] (inc r)
+    :else (if (not= ()))))
+
+(defn- hits-zero [{:keys [pos acc]} rotation-str]
+  (let [dir (first rotation-str)
+        amount (parse-long (apply str (subs rotation-str 1)))
+        op ({\L - \R +} dir)
+        pos' (mod (op pos amount) 100)
+        rotations (abs (/ (op pos amount) 100))
+        acc' (+ (count-hits pos pos' amount rotations) acc)]
+    {:pos pos' :acc acc'}))
+
+(defn solve-day1-part2-functional [pos rotations]
+  (:acc (reduce hits-zero {:pos pos :acc 0} rotations)))
+
